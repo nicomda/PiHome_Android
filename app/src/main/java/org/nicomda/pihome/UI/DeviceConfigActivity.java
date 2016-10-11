@@ -25,6 +25,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
     private TextView toolbar_title;
     private TextView toolbar_subtitle;
     private SharedPreferences prefs;
+    private SmoothAppBarLayout appbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,35 +40,11 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
                 finish();
             }
         });
-        SmoothAppBarLayout appbar=(SmoothAppBarLayout) findViewById(R.id.smooth_app_bar_layout);
+        appbar = (SmoothAppBarLayout) findViewById(R.id.smooth_app_bar_layout);
         toolbar_title=(TextView)appbar.findViewById(R.id.title);
         toolbar_subtitle=(TextView)appbar.findViewById(R.id.subtitle);
-        appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if(verticalOffset!=0){
-                    toolbar_subtitle.setVisibility(View.GONE);
-                    toolbar_title.setOnClickListener(null);
-                    toolbar_subtitle.setOnClickListener(null);
-                }else{
-                    toolbar_subtitle.setVisibility(View.VISIBLE);
-                    toolbar_title.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ChangeDeviceNameDialogFragment dialog=new ChangeDeviceNameDialogFragment();
-                            dialog.show(getSupportFragmentManager(),"Dialog Change Name");
-                        }
-                    });
-                    toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ChangeDeviceDescriptionDialogFragment dialog=new ChangeDeviceDescriptionDialogFragment();
-                            dialog.show(getSupportFragmentManager(),"Dialog Change Description");
-                        }
-                    });
-                }
-            }
-        });
+        //Setting up visibility and listeners in Coordinator Layout
+        configOffsetChangedListener();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -105,5 +82,34 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals("devicetitle")) toolbar_title.setText(prefs.getString("devicetitle",getString(R.string.device_title)));
         if(key.equals("devicesubtitle")) toolbar_subtitle.setText(prefs.getString("devicesubtitle",getString(R.string.device_title)));
+    }
+
+    public void configOffsetChangedListener() {
+        appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset != 0) {
+                    toolbar_subtitle.setVisibility(View.GONE);
+                    toolbar_title.setOnClickListener(null);
+                    toolbar_subtitle.setOnClickListener(null);
+                } else {
+                    toolbar_subtitle.setVisibility(View.VISIBLE);
+                    toolbar_title.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ChangeDeviceNameDialogFragment dialog = new ChangeDeviceNameDialogFragment();
+                            dialog.show(getSupportFragmentManager(), "Dialog Change Name");
+                        }
+                    });
+                    toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ChangeDeviceDescriptionDialogFragment dialog = new ChangeDeviceDescriptionDialogFragment();
+                            dialog.show(getSupportFragmentManager(), "Dialog Change Description");
+                        }
+                    });
+                }
+            }
+        });
     }
 }

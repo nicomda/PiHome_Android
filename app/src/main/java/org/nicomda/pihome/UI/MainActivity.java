@@ -48,22 +48,23 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), AddDevice.class));
             }
         });
-
+        //Navigation drawer config
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //LOADING ITEMS
+        //Loading Items
         datos=new ArrayList<>();
-        //LOAD DATA
+        //Load data
         datos.add(new Device(1,"Cochera",R.drawable.door,"Puerta Garaje"));
         datos.add(new Device(2,"Camara 1",R.drawable.cam,"Camara del vestíbulo"));
         recView=(RecyclerView)findViewById(R.id.my_device_list);
         recView.setHasFixedSize(true);
+        //instanciating MyDevicesAdapter to set it to RecyclerView
         final MyDevicesAdapter devAdapter=new MyDevicesAdapter(datos);
         recView.setAdapter(devAdapter);
         recView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
