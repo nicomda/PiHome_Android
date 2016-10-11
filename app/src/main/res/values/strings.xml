@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">PiHome</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    //DEVICES STRINGS
+    <string name="add_device_title">Select device</string>
+    <string name="device_bulb">Bulb</string>
+    <string name="device_light_switch">Light Switch</string>
+    <string name="device_blind">Blind</string>
+    <string name="device_sprinkle">Sprinkler</string>
+    <string name="device_cam">IP Camera</string>
+    <string name="device_door">Gate</string>
+    <string name="device_purify_plant">Pool Purifier</string>
+    <string name="device">Device</string>
+    <string name="devices">Devices</string>
+    <string name="undo">Undo</string>
+    <string name="device_deleted_msg">The device has been deleted</string>
+    <string name="scan_code">Scan QR</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="my_devices">My Devices</string>
+
+    //INTRO ACTIVITY
+    <string name="title_activity_intro">IntroActivity</string>
+    <string name="intro_1_title">Welcome to Pihome</string>
+    <string name="intro_1_description">With this app you will be able to self-domotize your home</string>
+    <string name="intro_2_title">"Location Permission"</string>
+    <string name="intro_2_description">"We need this to setup location-based activation for your devices"</string>
+    <string name="intro_3_title">"Camera Permission"</string>
+    <string name="intro_3_description">"We need this to Scan QR Codes in the app"</string>
+    <string name="intro_4_title">"All ready!"</string>
+    <string name="intro_4_description">"Now it's time to start adding your devices"</string>
+    <string name="title_activity_device_config">DeviceConfigActivity</string>
+    <!--<string name="intro_5_title">""</string>
+    <string name="intro_5_description">""</string>-->
+
+    //IP PREFERENCE SETTINGS
+    <string name="device_title">Set device title</string>
+    <string name="device_title_dialog_hint">Your device name</string>
+    <string name="device_subtitle">Set device description</string>
+    <string name="device_subtitle_dialog_hint">Your device description</string>
+
+    <string name="device_title_button_ok">Save</string>
+    <string name="device_title_button_cancel">Cancel</string>
+    <string name="door_category_ip">Server settings</string>
+    <string name="door_ip">Server IP</string>
+    <string name="door_ip_set">Set your server IP</string>
+    <string name="door_port">Port</string>
+    <string name="door_port_set">Set your server port</string>
+    <string name="door_password_enable">Password enable</string>
+    <string name="door_password">Password</string>
+    <string name="door_password_set">Set your password</string>
+    <string name="door_category_gpio">Pin config</string>
+    <string name="door_pin">GPIO Pin number</string>
+    <string name="door_pin_set">Set your GPIO Pin number</string>
+    <string name="door_pulse_enable">Pulse enable</string>
+    <string name="door_pulse_ms">Pulse duration</string>
+    <string name="door_pulse_ms_set">Set your pulse duration (ms)</string>
+    <string name="door_category_info">Device info</string>
+    <string name="door_device_id">Device ID</string>
+    <string name="door_device_id_set">This ID is unique and identifies your device</string>
+
+</resources>

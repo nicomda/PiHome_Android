@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/door_category_ip">
+
+        <android.support.v7.preference.EditTextPreference
+            android:key="key1"
+            android:title="@string/door_ip"
+            android:summary="@string/door_ip_set" />
+        <android.support.v7.preference.EditTextPreference
+            android:key="key2"
+            android:title="@string/door_port"
+            android:summary="@string/door_port_set"/>
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="key3"
+            android:title="@string/door_password_enable"
+            android:defaultValue="false" />
+
+        <android.support.v7.preference.EditTextPreference
+            android:dependency="key3"
+            android:key="key4"
+            android:title="@string/door_password"
+            android:summary="@string/door_password_set" />
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/door_category_gpio">
+
+        <android.support.v7.preference.EditTextPreference
+            android:key="key5"
+            android:title="@string/door_pin"
+            android:summary="@string/door_pin_set" />
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="key6"
+            android:title="@string/door_pulse_enable"
+            android:defaultValue="false" />
+
+
+        <android.support.v7.preference.EditTextPreference
+            android:dependency="key6"
+            android:key="key7"
+            android:title="@string/door_pulse_ms"
+            android:summary="@string/door_pulse_ms_set"
+            android:dialogMessage="@string/door_pulse_ms_set"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/door_category_info">
+
+        <Preference
+            android:key="key8"
+            android:selectable="false"
+            android:title="@string/door_device_id"
+            android:summary="@string/door_device_id_set"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

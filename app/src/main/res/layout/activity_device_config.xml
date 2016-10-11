@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+
+    <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
+        android:id="@+id/smooth_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_textView"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_back"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            <me.henrytao.smoothappbarlayout.SmoothCollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:minHeight="?attr/actionBarSize"
+                app:sctl_avatar_id="@+id/avatar"
+                app:sctl_collapsed_avatarSize="24dp"
+                app:sctl_collapsed_offsetX="?attr/actionBarSize"
+                app:sctl_collapsed_offsetY="20dp"
+                app:sctl_collapsed_subtitleTextSize="8sp"
+                app:sctl_collapsed_titleTextSize="20sp"
+                app:sctl_expanded_avatarSize="100dp"
+                app:sctl_expanded_offsetX="16dp"
+                app:sctl_expanded_offsetY="24dp"
+                app:sctl_expanded_subtitleTextSize="26dp"
+                app:sctl_expanded_titleTextSize="34dp"
+                app:sctl_subtitle_id="@+id/subtitle"
+                app:sctl_title_id="@+id/title"
+
+                android:elevation="4dp"
+                >
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/bulb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="200dp"
+                        android:id="@+id/title"
+                        android:text="Title"
+                        android:textColor="@color/colorPrimaryText"
+                        />
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="200dp"
+                        android:id="@+id/subtitle"
+                        android:text="Subtitle"
+                        android:textColor="@color/colorSecondaryText"
+                        />
+                </LinearLayout>
+            </me.henrytao.smoothappbarlayout.SmoothCollapsingToolbarLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:background="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/smooth_app_bar_layout"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_save" />
+
+    <include layout="@layout/content_device_config" />
+
+</android.support.design.widget.CoordinatorLayout>
