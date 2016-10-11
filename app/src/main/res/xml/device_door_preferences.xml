@@ -6,52 +6,70 @@
         android:title="@string/door_category_ip">
 
         <android.support.v7.preference.EditTextPreference
-            android:key="key1"
+            android:key="ip"
             android:title="@string/door_ip"
             android:summary="@string/door_ip_set" />
         <android.support.v7.preference.EditTextPreference
-            android:key="key2"
+            android:key="port"
             android:title="@string/door_port"
             android:summary="@string/door_port_set"/>
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="key3"
+            android:key="passswitch"
             android:title="@string/door_password_enable"
             android:defaultValue="false" />
-
-        <android.support.v7.preference.EditTextPreference
-            android:dependency="key3"
-            android:key="key4"
+        <EditTextPreferenceFix
+            android:dependency="passswitch"
+            android:key="password"
             android:title="@string/door_password"
             android:summary="@string/door_password_set" />
     </android.support.v7.preference.PreferenceCategory>
-    <android.support.v7.preference.PreferenceCategory
-        android:title="@string/door_category_gpio">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/door_category_gpio">
 
         <android.support.v7.preference.EditTextPreference
-            android:key="key5"
+            android:key="gpio"
             android:title="@string/door_pin"
             android:summary="@string/door_pin_set" />
 
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="key6"
+            android:key="pulseswitch"
             android:title="@string/door_pulse_enable"
             android:defaultValue="false" />
 
 
         <android.support.v7.preference.EditTextPreference
-            android:dependency="key6"
-            android:key="key7"
+            android:dependency="pulseswitch"
+            android:key="pulsems"
             android:title="@string/door_pulse_ms"
-            android:summary="@string/door_pulse_ms_set"
-            android:dialogMessage="@string/door_pulse_ms_set"/>
+            android:summary="@string/door_pulse_ms_set" />
     </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/door_category_gps">
 
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="gpsswitch"
+            android:title="@string/door_gps_enable"
+            android:defaultValue="false" />
+
+
+        <android.support.v7.preference.EditTextPreference
+            android:dependency="gpsswitch"
+            android:key="gpsdistance"
+            android:title="@string/door_gps_distance"
+            android:summary="@string/door_gps_distance_set" />
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/door_category_nfc">
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="nfcswitch"
+            android:title="@string/door_nfc_enable"
+            android:defaultValue="false" />
+
+    </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/door_category_info">
 
         <Preference
-            android:key="key8"
+            android:key="deviceid"
             android:selectable="false"
             android:title="@string/door_device_id"
             android:summary="@string/door_device_id_set"/>
