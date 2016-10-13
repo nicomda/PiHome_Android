@@ -1,5 +1,6 @@
 package org.nicomda.pihome.UI;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -45,13 +46,12 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         toolbar_subtitle=(TextView)appbar.findViewById(R.id.subtitle);
         //Setting up visibility and listeners in Coordinator Layout
         configOffsetChangedListener();
-
+        //Flo
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 

@@ -48,8 +48,7 @@
                 app:sctl_subtitle_id="@+id/subtitle"
                 app:sctl_title_id="@+id/title"
 
-                android:elevation="4dp"
-                >
+                android:elevation="4dp">
 
                 <ImageView
                     android:id="@+id/avatar"

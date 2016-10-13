@@ -5,14 +5,17 @@ package org.nicomda.pihome.ModelObjects;
  */
 
 public class Device {
-    private String name, additional_info;
+    private String name;
+    private String additional_info;
+    private String type;
     private Integer img_res,id;
 
-    public Device (Integer _id,String _name,Integer _img_res, String _additional_info){
+    public Device(Integer _id, String _name, Integer _img_res, String _additional_info, String _type) {
         name = _name;
         additional_info = _additional_info;
         img_res = _img_res;
         id=_id;
+        type = _type;
 
     }
 
@@ -49,4 +52,11 @@ public class Device {
     }
 
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

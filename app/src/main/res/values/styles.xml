@@ -37,6 +37,7 @@
         <item name="android:textColor">@color/color_preference_disabled</item>
         <item name="android:textColorSecondary">@color/color_preference_disabled</item>
         <item name="android:editTextColor">@color/colorPrimaryText</item>
+        <item name="android:textColorHint">#616161</item>
     </style>
 
 

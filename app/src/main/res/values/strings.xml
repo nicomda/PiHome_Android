@@ -50,17 +50,23 @@
     <string name="door_ip_set">Set your server IP</string>
     <string name="door_port">Port</string>
     <string name="door_port_set">Set your server port</string>
-    <string name="door_password_enable">Password enable</string>
+    <string name="door_password_enable">Enable password</string>
     <string name="door_password">Password</string>
     <string name="door_password_set">Set your password</string>
     <string name="door_category_gpio">Pin config</string>
     <string name="door_pin">GPIO Pin number</string>
     <string name="door_pin_set">Set your GPIO Pin number</string>
-    <string name="door_pulse_enable">Pulse enable</string>
+    <string name="door_pulse_enable">Enable pulse</string>
     <string name="door_pulse_ms">Pulse duration</string>
     <string name="door_pulse_ms_set">Set your pulse duration (ms)</string>
     <string name="door_category_info">Device info</string>
     <string name="door_device_id">Device ID</string>
     <string name="door_device_id_set">This ID is unique and identifies your device</string>
+    <string name="door_category_gps">GPS Restriction</string>
+    <string name="door_gps_enable">Enable Restriction</string>
+    <string name="door_gps_distance">Activation distance</string>
+    <string name="door_gps_distance_set">Set distance in meters</string>
+    <string name="door_category_nfc">NFC Activation</string>
+    <string name="door_nfc_enable">Enable NFC Activation</string>
 
 </resources>
