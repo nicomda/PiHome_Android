@@ -6,6 +6,8 @@ package org.nicomda.pihome.aux;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Build;
@@ -34,6 +36,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.nicomda.pihome.R;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFragmentCompat implements
         OnMapReadyCallback,
@@ -46,7 +52,6 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
     private String locString;
     private GoogleMap map;
     private SupportMapFragment mapFragment;
-    private LatLng PARIS;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -74,11 +79,11 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
         if (preference instanceof LocationPreference) {
             locString = ((LocationPreference) preference).getLoc_string();
         }
-        //TODO JUST FOR TESTING THIS VALUE ASSIGNMENT
-        locString = "HOLA";
+        //GETTING MAP
         mapFragment = ((SupportMapFragment) getFragmentManager()
                 .findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
+
     }
 
     @Override
@@ -106,6 +111,41 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
             buildGoogleApiClient();
             map.setMyLocationEnabled(true);
         }
+        map.getUiSettings().setMapToolbarEnabled(false);
+        //ON MAP CLICK LISTENER
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title(getString(R.string.selected_position));
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                mCurrLocationMarker = map.addMarker(markerOptions);
+
+            }
+        });
+
+        //SEARCH BY PLACENAME LISTENER
+        geocoder_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(getLatLngFromAddress(geocoder.getText().toString()));
+                markerOptions.title(getString(R.string.selected_position));
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                mCurrLocationMarker = map.addMarker(markerOptions);
+                map.moveCamera(CameraUpdateFactory.newLatLng(getLatLngFromAddress(geocoder.getText().toString())));
+                map.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+
+            }
+        });
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -126,8 +166,8 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.title(getString(R.string.current_position));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mCurrLocationMarker = map.addMarker(markerOptions);
         //move map camera
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -169,5 +209,24 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+    }
+
+    public LatLng getLatLngFromAddress(String location) {
+        List<LatLng> ll = new ArrayList<LatLng>();
+        if (Geocoder.isPresent()) {
+            try {
+                Geocoder gc = new Geocoder(getContext());
+                List<Address> addresses = gc.getFromLocationName(location, 1); // get the found Address Objects
+                // A list to save the coordinates if they are available
+                for (Address a : addresses) {
+                    if (a.hasLatitude() && a.hasLongitude()) {
+                        ll.add(new LatLng(a.getLatitude(), a.getLongitude()));
+                    }
+                }
+            } catch (IOException e) {
+                e.getMessage();
+            }
+        }
+        return ll.get(0);
     }
 }
