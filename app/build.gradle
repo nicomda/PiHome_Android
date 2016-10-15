@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -30,11 +30,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
-    //No included cause fixed preferences library already include this
+    compile 'com.google.android.gms:play-services-maps:9.6.1'
+    compile 'com.google.android.gms:play-services-location:9.6.1'
+    //Below libraries not included cause fixed preferences library already include this
     //compile 'com.android.support:preference-v7:24.2.1'
     //compile 'com.android.support:preference-v14:24.2.1'
     //Instead of, we use this library
     compile 'com.takisoft.fix:preference-v7:24.2.1.0'
+
 
     /*--------External Additional Libraries----------*/
     //QR SCANNER LIBRARY
@@ -42,7 +45,8 @@ dependencies {
     //APPINTRO LIBRARY
     compile 'com.github.paolorotolo:appintro:4.1.0'
     //IMPROVED PREFERENCES
-    compile 'net.xpece.android:support-preference:1.0.3'
+    //compile 'net.xpece.android:support-preference:1.0.3'
     //BOOSTED APPBAR LAYOUT
-    compile "me.henrytao:smooth-app-bar-layout:24.2.1.0"
+    compile 'me.henrytao:smooth-app-bar-layout:24.2.1.0'
+
 }
