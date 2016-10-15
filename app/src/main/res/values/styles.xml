@@ -40,6 +40,10 @@
         <item name="android:textColorHint">#616161</item>
     </style>
 
+    <!--Styling custom Location preference, without this, it doesn't apply preferenceTheme-->
+    <style name="AppPreference">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
 
 
 </resources>
