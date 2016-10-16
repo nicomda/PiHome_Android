@@ -5,6 +5,7 @@ package org.nicomda.pihome.aux;
  */
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -14,10 +15,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.DialogPreference;
 import android.support.v7.preference.PreferenceDialogFragmentCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -52,10 +56,10 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
     private String locString;
     private GoogleMap map;
     private SupportMapFragment mapFragment;
-    LocationRequest mLocationRequest;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
+    private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private Marker mCurrLocationMarker;
 
     public static LocationPreferenceDialogFragmentCompat newInstance(String key) {
         final LocationPreferenceDialogFragmentCompat
@@ -67,14 +71,12 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
         return fragment;
     }
 
-
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
         geocoder = (EditText) view.findViewById(R.id.edittext_geocoder);
         geocoder_button = (ImageView) view.findViewById(R.id.button_search_geocoder);
-        geocoder.setText("HOLA CARACOLA");
         DialogPreference preference = getPreference();
         if (preference instanceof LocationPreference) {
             locString = ((LocationPreference) preference).getLoc_string();
@@ -84,15 +86,18 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
                 .findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
+
     }
 
     @Override
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
             DialogPreference preference = getPreference();
-            LocationPreference locpref = ((LocationPreference) preference);
-            locpref.setLocationString(locString);
-
+            if (preference instanceof LocationPreference) {
+                LocationPreference locationPreference = ((LocationPreference) preference);
+                String locprefstring = String.valueOf(mCurrLocationMarker.getPosition().latitude) + "," + String.valueOf(mCurrLocationMarker.getPosition().longitude);
+                locationPreference.setLocationString(locprefstring);
+            }
         }
     }
 
@@ -112,6 +117,7 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
             map.setMyLocationEnabled(true);
         }
         map.getUiSettings().setMapToolbarEnabled(false);
+
         //ON MAP CLICK LISTENER
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -147,6 +153,7 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
             }
         });
     }
+
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -209,6 +216,14 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mapFragment != null)
+            getFragmentManager().beginTransaction().remove(mapFragment).commit();
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
     public LatLng getLatLngFromAddress(String location) {
