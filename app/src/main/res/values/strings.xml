@@ -37,7 +37,7 @@
     <!--<string name="intro_5_title">""</string>
     <string name="intro_5_description">""</string>-->
 
-    //IP PREFERENCE SETTINGS
+    //PREFERENCE SETTINGS
     <string name="device_title">Set device title</string>
     <string name="device_title_dialog_hint">Your device name</string>
     <string name="device_subtitle">Set device description</string>
@@ -66,7 +66,11 @@
     <string name="door_gps_enable">Enable Restriction</string>
     <string name="door_gps_distance">Activation distance</string>
     <string name="door_gps_distance_set">Set distance in meters</string>
+    <string name="door_gps_location">Activation distance</string>
+    <string name="door_gps_location_set">Set distance in meters</string>
     <string name="door_category_nfc">NFC Activation</string>
     <string name="door_nfc_enable">Enable NFC Activation</string>
+    <string name="current_position">Current position</string>
+    <string name="selected_position">Selected position</string>
 
 </resources>
