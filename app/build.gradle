@@ -7,8 +7,8 @@ android {
         applicationId "org.nicomda.pihome"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 1
-        versionName "0.0.4 alpha"
+        versionCode 2
+        versionName "0.0.5 alpha"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
