@@ -2,24 +2,24 @@ package org.nicomda.pihome.ModelObjects;
 
 /**
  * Created by nicomda on 13/10/16.
- * 
+ *
  */
 
 public class DeviceSwitch {
-    private int id;
+    private String id;
     private String ip;
-    private int port;
+    private String port;
     private String password;
-    private int gpio;
-    private int pulse_duration;
-    private int gps_distance;
+    private String gpio;
+    private String pulse_duration;
+    private String gps_distance;
     private String gps_location;
-    private boolean password_enabled;
-    private boolean pulse_enabled;
-    private boolean gps_enabled;
-    private boolean nfc_enabled;
+    private String password_enabled;
+    private String pulse_enabled;
+    private String gps_enabled;
+    private String nfc_enabled;
 
-    DeviceSwitch(DeviceSwitch device) {
+    public DeviceSwitch(DeviceSwitch device) {
         id = device.getId();
         ip = device.getIp();
         port = device.getPort();
@@ -35,11 +35,29 @@ public class DeviceSwitch {
 
     }
 
-    public int getId() {
+    public DeviceSwitch(String _id, String _ip, String _port, String _password_enabled, String _password,
+                        String _gpio, String _pulse_enabled, String _pulse_duration, String _gps_enabled,
+                        String _gps_distance, String _gps_location, String _nfc_enabled) {
+        id = _id;
+        ip = _ip;
+        port = _port;
+        gpio = _gpio;
+        password = _password;
+        pulse_duration = _pulse_duration;
+        gps_distance = _gps_distance;
+        gps_location = _gps_location;
+        password_enabled = _password_enabled;
+        pulse_enabled = _pulse_enabled;
+        gps_enabled = _gps_enabled;
+        nfc_enabled = _nfc_enabled;
+
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -51,67 +69,67 @@ public class DeviceSwitch {
         this.ip = ip;
     }
 
-    public int getPort() {
+    public String getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(String port) {
         this.port = port;
     }
 
-    public int getGpio() {
+    public String getGpio() {
         return gpio;
     }
 
-    public void setGpio(int gpio) {
+    public void setGpio(String gpio) {
         this.gpio = gpio;
     }
 
-    public int getPulse_duration() {
+    public String getPulse_duration() {
         return pulse_duration;
     }
 
-    public void setPulse_duration(int pulse_duration) {
+    public void setPulse_duration(String pulse_duration) {
         this.pulse_duration = pulse_duration;
     }
 
-    public int getGps_distance() {
+    public String getGps_distance() {
         return gps_distance;
     }
 
-    public void setGps_distance(int gps_distance) {
+    public void setGps_distance(String gps_distance) {
         this.gps_distance = gps_distance;
     }
 
-    public boolean isPassword_enabled() {
+    public String isPassword_enabled() {
         return password_enabled;
     }
 
-    public void setPassword_enabled(boolean password_enabled) {
+    public void setPassword_enabled(String password_enabled) {
         this.password_enabled = password_enabled;
     }
 
-    public boolean isPulse_enabled() {
+    public String isPulse_enabled() {
         return pulse_enabled;
     }
 
-    public void setPulse_enabled(boolean pulse_enabled) {
+    public void setPulse_enabled(String pulse_enabled) {
         this.pulse_enabled = pulse_enabled;
     }
 
-    public boolean isGps_enabled() {
+    public String isGps_enabled() {
         return gps_enabled;
     }
 
-    public void setGps_enabled(boolean gps_enabled) {
+    public void setGps_enabled(String gps_enabled) {
         this.gps_enabled = gps_enabled;
     }
 
-    public boolean isNfc_enabled() {
+    public String isNfc_enabled() {
         return nfc_enabled;
     }
 
-    public void setNfc_enabled(boolean nfc_enabled) {
+    public void setNfc_enabled(String nfc_enabled) {
         this.nfc_enabled = nfc_enabled;
     }
 

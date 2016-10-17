@@ -31,26 +31,34 @@ public class DB_PiHome extends SQLiteOpenHelper {
         super(contexto, DB_NAME, null, VERSION_ACTUAL);
     }
 
+    interface Referencias {
+
+        String ID_REFERENCED = String.format("REFERENCES %s(%s) ON DELETE CASCADE",
+                Tables.DEVICE, Device.ID);
+
+
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL," +
-                        "%s TEXT,%s TEXT)",
+                        "%s TEXT,%s TEXT,%s TEXT)",
                 Tables.DEVICE, BaseColumns._ID,
-                Device.TITLE, Device.DESCRIPTION, Device.TYPE,
+                Device.ID, Device.TITLE,
+                Device.DESCRIPTION, Device.TYPE,
                 Device.IMAGE, Device.COLOR));
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL," +
+                        "%s TEXT UNIQUE NOT NULL %s ,%s TEXT NOT NULL,%s TEXT NOT NULL," +
                         "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL," +
-                        "%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL," +
-                        "FOREIGN KEY(%s) REFERENCES %s(%s)",
+                        "%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL)",
                 Tables.SWITCH, BaseColumns._ID,
+                Switch.ID, Referencias.ID_REFERENCED,
                 Switch.IP, Switch.PORT, Switch.PASSWORD_ENABLED,
-                Switch.PASSWORD_ENABLED, Switch.GPIO,
+                Switch.PASSWORD, Switch.GPIO,
                 Switch.PULSE_ENABLED, Switch.PULSE_DURATION,
                 Switch.GPS_ENABLED, Switch.GPS_DISTANCE,
-                Switch.GPS_LOCATION, Switch.NFC_ENABLED,
-                Switch.ID, Tables.DEVICE, Device.ID));
+                Switch.GPS_LOCATION, Switch.NFC_ENABLED));
     }
 
 

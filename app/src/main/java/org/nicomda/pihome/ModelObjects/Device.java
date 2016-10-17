@@ -8,11 +8,11 @@ public class Device {
     private String name;
     private String additional_info;
     private String type;
-    private Integer img_res;
-    private Integer id;
-    private Integer color_res;
+    private String img_res;
+    private String id;
+    private String color_res;
 
-    public Device(Integer _id, String _name, Integer _img_res, String _additional_info, String _type, Integer _color_res) {
+    public Device(String _id, String _name, String _additional_info, String _img_res, String _type, String _color_res) {
         name = _name;
         additional_info = _additional_info;
         img_res = _img_res;
@@ -32,7 +32,7 @@ public class Device {
 
     }
 
-    public Integer getImg_res() {
+    public String getImg_res() {
         return img_res;
     }
 
@@ -40,7 +40,7 @@ public class Device {
         return additional_info;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -52,11 +52,11 @@ public class Device {
         this.additional_info = additional_info;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setImg_res(Integer img_res) {
+    public void setImg_res(String img_res) {
         this.img_res = img_res;
     }
 
@@ -73,11 +73,11 @@ public class Device {
         this.type = type;
     }
 
-    public Integer getColor_res() {
+    public String getColor_res() {
         return color_res;
     }
 
-    public void setColor_res(Integer color_res) {
+    public void setColor_res(String color_res) {
         this.color_res = color_res;
     }
 }
