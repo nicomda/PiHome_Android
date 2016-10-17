@@ -2,15 +2,18 @@ package org.nicomda.pihome.ModelObjects;
 
 /**
  * Created by nicomda on 13/10/16.
+ * 
  */
 
 public class DeviceSwitch {
     private int id;
     private String ip;
     private int port;
+    private String password;
     private int gpio;
     private int pulse_duration;
     private int gps_distance;
+    private String gps_location;
     private boolean password_enabled;
     private boolean pulse_enabled;
     private boolean gps_enabled;
@@ -21,8 +24,10 @@ public class DeviceSwitch {
         ip = device.getIp();
         port = device.getPort();
         gpio = device.getGpio();
+        password = device.getPassword();
         pulse_duration = device.getPulse_duration();
         gps_distance = device.getGps_distance();
+        gps_location = device.getGps_location();
         password_enabled = device.isPassword_enabled();
         pulse_enabled = device.isPulse_enabled();
         gps_enabled = device.isGps_enabled();
@@ -108,5 +113,21 @@ public class DeviceSwitch {
 
     public void setNfc_enabled(boolean nfc_enabled) {
         this.nfc_enabled = nfc_enabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGps_location() {
+        return gps_location;
+    }
+
+    public void setGps_location(String gps_location) {
+        this.gps_location = gps_location;
     }
 }

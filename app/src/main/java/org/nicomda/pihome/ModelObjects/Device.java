@@ -22,6 +22,16 @@ public class Device {
 
     }
 
+    public Device(Device device) {
+        name = device.getName();
+        additional_info = device.getAdditional_info();
+        img_res = device.getImg_res();
+        id = device.getId();
+        type = device.getType();
+        color_res = device.getColor_res();
+
+    }
+
     public Integer getImg_res() {
         return img_res;
     }
