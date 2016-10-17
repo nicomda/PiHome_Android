@@ -8,14 +8,17 @@ public class Device {
     private String name;
     private String additional_info;
     private String type;
-    private Integer img_res,id;
+    private Integer img_res;
+    private Integer id;
+    private Integer color_res;
 
-    public Device(Integer _id, String _name, Integer _img_res, String _additional_info, String _type) {
+    public Device(Integer _id, String _name, Integer _img_res, String _additional_info, String _type, Integer _color_res) {
         name = _name;
         additional_info = _additional_info;
         img_res = _img_res;
         id=_id;
         type = _type;
+        color_res = _color_res;
 
     }
 
@@ -58,5 +61,13 @@ public class Device {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getColor_res() {
+        return color_res;
+    }
+
+    public void setColor_res(Integer color_res) {
+        this.color_res = color_res;
     }
 }
