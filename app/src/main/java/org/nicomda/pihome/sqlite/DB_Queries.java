@@ -75,6 +75,27 @@ public final class DB_Queries {
         );
     }
 
+    public org.nicomda.pihome.ModelObjects.DeviceSwitch getSwitchByID(String id) {
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + DB_PiHome.Tables.SWITCH + " WHERE " + Device.ID + " = '" + id + "'", null);
+        c.moveToFirst();
+        c.getString(c.getColumnIndex(Device.ID));
+        return new org.nicomda.pihome.ModelObjects.DeviceSwitch(
+                c.getString(c.getColumnIndex(Switch.ID)),
+                c.getString(c.getColumnIndex(Switch.IP)),
+                c.getString(c.getColumnIndex(Switch.PORT)),
+                c.getString(c.getColumnIndex(Switch.PASSWORD_ENABLED)),
+                c.getString(c.getColumnIndex(Switch.PASSWORD)),
+                c.getString(c.getColumnIndex(Switch.GPIO)),
+                c.getString(c.getColumnIndex(Switch.PULSE_ENABLED)),
+                c.getString(c.getColumnIndex(Switch.PULSE_ENABLED)),
+                c.getString(c.getColumnIndex(Switch.GPS_ENABLED)),
+                c.getString(c.getColumnIndex(Switch.GPS_DISTANCE)),
+                c.getString(c.getColumnIndex(Switch.GPS_LOCATION)),
+                c.getString(c.getColumnIndex(Switch.NFC_ENABLED))
+        );
+    }
+
     public String insertDevice(org.nicomda.pihome.ModelObjects.Device device) {
         SQLiteDatabase db = database.getWritableDatabase();
         // Generar Pk
@@ -112,11 +133,11 @@ public final class DB_Queries {
         return result > 0;
     }
 
-    public boolean deleteDeviceById(String idDevice) {
+    public boolean deleteDeviceById(String id) {
         SQLiteDatabase db = database.getWritableDatabase();
 
         String whereClause = Device.ID + "=?";
-        String[] whereArgs = {idDevice};
+        String[] whereArgs = {id};
 
         int result = db.delete(DB_PiHome.Tables.DEVICE, whereClause, whereArgs);
 
@@ -195,7 +216,7 @@ public final class DB_Queries {
         return result > 0;
     }
 
-    public boolean deleteSwitch(String id) {
+    public boolean deleteSwitchById(String id) {
         SQLiteDatabase db = database.getWritableDatabase();
 
         String selection = String.format("%s=?", Switch.ID);
