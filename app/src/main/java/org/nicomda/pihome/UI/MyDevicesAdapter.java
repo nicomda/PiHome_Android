@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 /**
  * Created by nicomda on 3/10/16.
+ * Adapter for main screen devices
  */
 public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.ViewHolder> {
     private ArrayList<Device> mDataset;
@@ -56,7 +57,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
             TitleView.setText(d.getName());
             SubtitleView.setText(d.getAdditional_info());
             editView.setImageResource(R.drawable.ic_settings);
-            imgView.setImageResource(d.getImg_res());
+            imgView.setImageResource(Integer.valueOf(d.getImg_res()));
         }
     }
 
@@ -73,8 +74,8 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_device, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -84,7 +85,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         // - replace the contents of the view with that element
         final Device item= mDataset.get(position);
         holder.bindDevice(item);
-        holder.opt_activated=new Boolean(false);
+        holder.opt_activated = Boolean.valueOf(false);
         holder.editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

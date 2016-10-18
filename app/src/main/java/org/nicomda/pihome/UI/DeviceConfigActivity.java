@@ -5,20 +5,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import org.nicomda.pihome.ModelObjects.Device;
+import org.nicomda.pihome.ModelObjects.DeviceSwitch;
 import org.nicomda.pihome.R;
 import org.nicomda.pihome.UI.DeviceConfigFragments.ChangeDeviceDescriptionDialogFragment;
 import org.nicomda.pihome.UI.DeviceConfigFragments.ChangeDeviceNameDialogFragment;
 import org.nicomda.pihome.UI.DeviceConfigFragments.DoorFragment;
+import org.nicomda.pihome.sqlite.DB_Queries;
 
 import me.henrytao.smoothappbarlayout.SmoothAppBarLayout;
 
@@ -27,6 +27,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
     private TextView toolbar_subtitle;
     private SharedPreferences prefs;
     private SmoothAppBarLayout appbar;
+    private DB_Queries datos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +47,14 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         toolbar_subtitle=(TextView)appbar.findViewById(R.id.subtitle);
         //Setting up visibility and listeners in Coordinator Layout
         configOffsetChangedListener();
-        //Flo
+        //GET DB INSTANCE
+        datos = DB_Queries.getInstance(getApplicationContext());
+        //FAB BUTTON SAVE
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveDevice();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
@@ -80,8 +84,10 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals("devicetitle")) toolbar_title.setText(prefs.getString("devicetitle",getString(R.string.device_title)));
-        if(key.equals("devicesubtitle")) toolbar_subtitle.setText(prefs.getString("devicesubtitle",getString(R.string.device_title)));
+        if (key.equals("devicetitle"))
+            toolbar_title.setText(prefs.getString("devicetitle", getString(R.string.device_title_set)));
+        if (key.equals("devicesubtitle"))
+            toolbar_subtitle.setText(prefs.getString("devicesubtitle", getString(R.string.device_title_set)));
     }
 
     public void configOffsetChangedListener() {
@@ -112,4 +118,75 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
             }
         });
     }
+
+    public Device getDeviceFromPrefs() {
+        Device dev = new Device(prefs.getString("deviceid", "ID"),
+                prefs.getString("devicetitle", getString(R.string.device_title)),
+                prefs.getString("devicesubtitle", getString(R.string.device_subtitle)),
+                prefs.getString("imgres", "UNSET"),
+                prefs.getString("type", "UNSET"),
+                prefs.getString("colorres", "UNSET"));
+
+        return dev;
+    }
+
+    public DeviceSwitch getSwitchFromPrefs() {
+        DeviceSwitch dev = new DeviceSwitch(
+                prefs.getString("deviceid", getString(R.string.door_device_id)),
+                prefs.getString("ip", getString(R.string.door_ip)),
+                prefs.getString("port", getString(R.string.door_port)),
+                String.valueOf(prefs.getBoolean("passswitch", false)),
+                prefs.getString("password", getString(R.string.door_password)),
+                prefs.getString("gpio", getString(R.string.door_pin)),
+                String.valueOf(prefs.getBoolean("pulseswitch", false)),
+                prefs.getString("pulsems", getString(R.string.door_pulse_ms)),
+                String.valueOf(prefs.getBoolean("gpsswitch", false)),
+                prefs.getString("gpsdistance", getString(R.string.door_gps_distance)),
+                prefs.getString("location", getString(R.string.door_gps_location)),
+                String.valueOf(prefs.getBoolean("nfcswitch", false)));
+
+        return dev;
+    }
+
+    public void saveDevice() {
+        DeviceSwitch s;
+        Device d;
+        s = getSwitchFromPrefs();
+        d = getDeviceFromPrefs();
+        try {
+            datos.getDb().beginTransaction();
+            Log.d("INSERTED DEVICE ", datos.insertDevice(d));
+            d = getDeviceByName(d.getName());
+            //s.setId(d.getId());
+            //Log.d("INSERTED SWITCH ",datos.insertSwitch(s));
+            datos.getDb().setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+
+        } finally {
+            datos.getDb().endTransaction();
+        }
+    }
+
+    public Device getDeviceByName(String name) {
+        Device d;
+        try {
+            datos.getDb().beginTransaction();
+            d = datos.getDeviceByName(name);
+            datos.getDb().setTransactionSuccessful();
+            return d;
+        } catch (Exception e) {
+            Log.d("Database Exception", e.getMessage());
+            d = null;
+            return d;
+        } finally {
+            datos.getDb().endTransaction();
+
+        }
+
+    }
+
+
+
+
 }

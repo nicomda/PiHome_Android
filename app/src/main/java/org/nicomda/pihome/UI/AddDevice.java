@@ -52,7 +52,7 @@ public class AddDevice extends AppCompatActivity {
     private List<DeviceType> getAllItemList(){
         //DEVICE ARRAY
         List<DeviceType> allItems = new ArrayList<DeviceType>();
-        allItems.add(new DeviceType(getApplicationContext().getString(R.string.device_light_switch), R.drawable.light_switch));
+        allItems.add(new DeviceType(getApplicationContext().getString(R.string.device_switch), R.drawable.light_switch));
         allItems.add(new DeviceType(getApplicationContext().getString(R.string.device_bulb), R.drawable.bulb));
         allItems.add(new DeviceType(getApplicationContext().getString(R.string.device_door), R.drawable.door));
         allItems.add(new DeviceType(getApplicationContext().getString(R.string.device_cam), R.drawable.cam));

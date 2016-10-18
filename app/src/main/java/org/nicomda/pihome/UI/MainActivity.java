@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.nicomda.pihome.ModelObjects.Device;
 import org.nicomda.pihome.R;
+import org.nicomda.pihome.sqlite.DB_Queries;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView recView;
     private ArrayList<Device> datos;
+    private DB_Queries database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,26 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //Loading Items
+        //Loading Items from database to the ViewHolder Array
+        database = DB_Queries.getInstance(getApplicationContext());
         datos=new ArrayList<>();
-        //Load data
-        datos.add(new Device(1,"Cochera",R.drawable.door,"Puerta Garaje"));
-        datos.add(new Device(2,"Camara 1",R.drawable.cam,"Camara del vestíbulo"));
+        try {
+            database.getDb().beginTransaction();
+            datos = database.getDevices();
+            for (int i = 0; i < datos.size(); i++) {
+                System.out.println("Device " + i);
+                System.out.println(datos.get(i).getId());
+                System.out.println(datos.get(i).getName());
+                System.out.println(datos.get(i).getAdditional_info());
+                System.out.println(datos.get(i).getType());
+            }
+            database.getDb().setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Database Exception", e.getMessage());
+
+        } finally {
+            database.getDb().endTransaction();
+        }
         recView=(RecyclerView)findViewById(R.id.my_device_list);
         recView.setHasFixedSize(true);
         //instanciating MyDevicesAdapter to set it to RecyclerView
