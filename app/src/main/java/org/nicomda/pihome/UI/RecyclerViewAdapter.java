@@ -48,6 +48,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onClick(View view) {
             prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
             editor = prefs.edit();
+            //Delete device info from preferences to set a new one
+            clearDevicePrefs();
             editor.putString("type", deviceName.getText().toString());
             //Using tag to save resource ID integer
             editor.putString("imgres", String.valueOf(devicePhoto.getTag()));
@@ -62,6 +64,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     break;
             }
 
+        }
+
+        //Clearing devices related prefs to set a new one
+        public void clearDevicePrefs() {
+            editor.remove("ip");
+            editor.remove("port");
+            editor.remove("passswitch");
+            editor.remove("password");
+            editor.remove("gpio");
+            editor.remove("pulseswitch");
+            editor.remove("pulsems");
+            editor.remove("gpsswitch");
+            editor.remove("gpsdistance");
+            editor.remove("location");
+            editor.remove("nfcswitch");
+            editor.remove("deviceid");
+            editor.remove("devicetitle");
+            editor.remove("devicesubtitle");
+            editor.remove("imgres");
+            editor.remove("type");
+            editor.remove("colorres");
         }
     }
 
