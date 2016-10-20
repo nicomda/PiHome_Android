@@ -67,8 +67,8 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         //Setup OnSharedPreferenceChangeListener to get Title & Subtitle from the Dialog
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        toolbar_title.setText(prefs.getString("devicetitle", getString(R.string.device_title_set)));
-        toolbar_subtitle.setText(prefs.getString("devicesubtitle", getString(R.string.device_title_set)));
+        toolbar_title.setText(prefs.getString("devicetitle", getString(R.string.device_title)));
+        toolbar_subtitle.setText(prefs.getString("devicesubtitle", getString(R.string.device_subtitle)));
 
         //
     }
@@ -158,7 +158,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         Device d;
         s = getSwitchFromPrefs();
         d = getDeviceFromPrefs();
-        s.setId(d.generarIdDevice());
+        s.setId(d.generarIdDevice()); // Double id assignment
         try {
             datos.getDb().beginTransaction();
             Log.d("DBaseInsert DEVICE ", datos.insertDevice(d));
@@ -190,6 +190,21 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
 
     }
 
+    public Boolean isDeviceInDB(String name) {
+        //Smart Idea: Using exception in database read to know the existence.
+        Boolean canGetDevice = Boolean.FALSE;
+        try {
+            datos.getDb().beginTransaction();
+            datos.getDeviceByName(name);
+            datos.getDb().setTransactionSuccessful();
+            canGetDevice = Boolean.TRUE;
+        } catch (Exception e) {
+            Log.d("DBaseException", e.getMessage());
+        } finally {
+            datos.getDb().endTransaction();
+        }
+        return canGetDevice;
+    }
     //TODO UPDATE EXISTING DEVICE ON DB IMPLEMENTS DEVICEALREADYEXISTS
 
 
