@@ -3,8 +3,10 @@ package org.nicomda.pihome.UI;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,8 +32,10 @@ import java.util.ArrayList;
 public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.ViewHolder> {
     private ArrayList<Device> mDataset;
     private DB_Queries database;
-    private DeviceSwitch undodeleteswitch;
-    private Device undodeletedevice;
+    private DeviceSwitch undodeleteswitch, editswitch;
+    private Device undodeletedevice, editdevice;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -44,6 +48,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         public ImageView binIcon;
         public ImageView configIcon;
         public Boolean opt_activated;
+
 
         // each data item is just a string in this case
 
@@ -79,6 +84,8 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
                 .inflate(R.layout.card_view_device, parent, false);
         // set the view's size, margins, paddings and layout parameters
         database = DB_Queries.getInstance(v.getContext());
+        prefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+        editor = prefs.edit();
 
         return new ViewHolder(v);
     }
@@ -131,7 +138,8 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         holder.configIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"Config",Toast.LENGTH_SHORT).show();
+                loadDevicePreferences(mDataset.get(position), getSwitchFromDatabase(mDataset.get(position).getId()));
+                v.getContext().startActivity(new Intent(v.getContext(), DeviceConfigActivity.class));
             }
         });
         holder.binIcon.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +181,28 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         holder.configIcon.setOnClickListener(null);
         holder.binIcon.setOnClickListener(null);
         holder.opt_activated=false;
+    }
+
+    public void loadDevicePreferences(Device d, DeviceSwitch s) {
+        editor.putString("ip", s.getIp());
+        editor.putString("port", s.getPort());
+        editor.putBoolean("passswitch", Boolean.valueOf(s.isPassword_enabled()));
+        editor.putString("password", s.getPassword());
+        editor.putString("gpio", s.getGpio());
+        editor.putBoolean("pulseswitch", Boolean.valueOf(s.isPulse_enabled()));
+        editor.putString("pulsems", s.getPulse_duration());
+        editor.putBoolean("gpsswitch", Boolean.valueOf(s.isGps_enabled()));
+        editor.putString("gpsdistance", s.getGps_distance());
+        editor.putString("location", s.getGps_location());
+        editor.putBoolean("nfcswitch", Boolean.valueOf(s.isNfc_enabled()));
+        editor.putString("deviceid", d.getId());
+        editor.putString("devicetitle", d.getName());
+        editor.putString("devicesubtitle", d.getAdditional_info());
+        editor.putString("imgres", d.getImg_res());
+        editor.putString("type", d.getType());
+        editor.putString("colorres", d.getColor_res());
+        editor.commit();
+
     }
 
     public void deleteDeviceFromDatabase(String id, Context context) {
