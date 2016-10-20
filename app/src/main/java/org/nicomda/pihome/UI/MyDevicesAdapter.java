@@ -32,8 +32,8 @@ import java.util.ArrayList;
 public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.ViewHolder> {
     private ArrayList<Device> mDataset;
     private DB_Queries database;
-    private DeviceSwitch undodeleteswitch, editswitch;
-    private Device undodeletedevice, editdevice;
+    private DeviceSwitch undodeleteswitch;
+    private Device undodeletedevice;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
@@ -67,6 +67,14 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
             SubtitleView.setText(d.getAdditional_info());
             editView.setImageResource(R.drawable.ic_settings);
             imgView.setImageResource(Integer.valueOf(d.getImg_res()));
+            //TODO ACTION FOR THE DEVICE. SWITCH TYPE, GET INFO AND ID FROM DB
+            final String itemid = d.getId();
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "ID: " + itemid, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -93,8 +101,6 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         final Device item = mDataset.get(holder.getAdapterPosition());
         holder.bindDevice(item);
         holder.opt_activated = Boolean.FALSE;
@@ -113,7 +119,6 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
                 }
             }
         });
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
