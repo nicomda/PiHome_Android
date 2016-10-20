@@ -45,6 +45,8 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         appbar = (SmoothAppBarLayout) findViewById(R.id.smooth_app_bar_layout);
         toolbar_title=(TextView)appbar.findViewById(R.id.title);
         toolbar_subtitle=(TextView)appbar.findViewById(R.id.subtitle);
+        toolbar_title.setText(prefs.getString("devicetitle", getString(R.string.device_title_set)));
+        toolbar_subtitle.setText(prefs.getString("devicesubtitle", getString(R.string.device_title_set)));
         //Setting up visibility and listeners in Coordinator Layout
         configOffsetChangedListener();
         //GET DB INSTANCE
@@ -66,6 +68,8 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         //Setup OnSharedPreferenceChangeListener to get Title & Subtitle from the Dialog
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
+
+        //
     }
 
     @Override
@@ -185,6 +189,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
 
     }
 
+    //TODO UPDATE EXISTING DEVICE ON DB IMPLEMENTS DEVICEALREADYEXISTS
 
 
 
