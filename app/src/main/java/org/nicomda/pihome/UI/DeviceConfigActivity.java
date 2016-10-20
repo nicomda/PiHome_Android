@@ -158,17 +158,34 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         Device d;
         s = getSwitchFromPrefs();
         d = getDeviceFromPrefs();
-        s.setId(d.generarIdDevice()); // Double id assignment
-        try {
-            datos.getDb().beginTransaction();
-            Log.d("DBaseInsert DEVICE ", datos.insertDevice(d));
-            Log.d("DBaseInsert SWITCH ", datos.insertSwitch(s));
-            datos.getDb().setTransactionSuccessful();
-        } catch (Exception e) {
-            Log.d("DBaseException", e.getMessage());
+        //This means it's a new device because has no ID assigned
+        if (s.getId() == getString(R.string.door_device_id)) {
+            s.setId(d.generarIdDevice()); // Double id assignment
+            //INSERT DB QUERIES
+            try {
+                datos.getDb().beginTransaction();
+                Log.d("DBaseInsert DEVICE ", datos.insertDevice(d));
+                Log.d("DBaseInsert SWITCH ", datos.insertSwitch(s));
+                datos.getDb().setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.d("DBaseException", e.getMessage());
 
-        } finally {
-            datos.getDb().endTransaction();
+            } finally {
+                datos.getDb().endTransaction();
+            }
+        } else {
+            //UPDATE DB QUERIES
+            try {
+                datos.getDb().beginTransaction();
+                Log.d("DBaseUpdate DEVICE ", String.valueOf(datos.updateDevice(d)));
+                Log.d("DBaseUpdate SWITCH ", String.valueOf(datos.updateSwitch(s)));
+                datos.getDb().setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.d("DBaseException", e.getMessage());
+
+            } finally {
+                datos.getDb().endTransaction();
+            }
         }
     }
 
@@ -190,22 +207,6 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
 
     }
 
-    public Boolean isDeviceInDB(String name) {
-        //Smart Idea: Using exception in database read to know the existence.
-        Boolean canGetDevice = Boolean.FALSE;
-        try {
-            datos.getDb().beginTransaction();
-            datos.getDeviceByName(name);
-            datos.getDb().setTransactionSuccessful();
-            canGetDevice = Boolean.TRUE;
-        } catch (Exception e) {
-            Log.d("DBaseException", e.getMessage());
-        } finally {
-            datos.getDb().endTransaction();
-        }
-        return canGetDevice;
-    }
-    //TODO UPDATE EXISTING DEVICE ON DB IMPLEMENTS DEVICEALREADYEXISTS
 
 
 
