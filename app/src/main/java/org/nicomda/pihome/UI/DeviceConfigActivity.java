@@ -10,6 +10,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nicomda.pihome.ModelObjects.Device;
@@ -25,6 +26,7 @@ import me.henrytao.smoothappbarlayout.SmoothAppBarLayout;
 public class DeviceConfigActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private TextView toolbar_title;
     private TextView toolbar_subtitle;
+    private ImageView avatar;
     private SharedPreferences prefs;
     private SmoothAppBarLayout appbar;
     private DB_Queries datos;
@@ -45,7 +47,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         appbar = (SmoothAppBarLayout) findViewById(R.id.smooth_app_bar_layout);
         toolbar_title=(TextView)appbar.findViewById(R.id.title);
         toolbar_subtitle=(TextView)appbar.findViewById(R.id.subtitle);
-
+        avatar = (ImageView) appbar.findViewById(R.id.avatar);
         //Setting up visibility and listeners in Coordinator Layout
         configOffsetChangedListener();
         //GET DB INSTANCE
@@ -69,6 +71,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         prefs.registerOnSharedPreferenceChangeListener(this);
         toolbar_title.setText(prefs.getString("devicetitle", getString(R.string.device_title)));
         toolbar_subtitle.setText(prefs.getString("devicesubtitle", getString(R.string.device_subtitle)));
+        avatar.setImageResource(Integer.valueOf(prefs.getString("imgres", String.valueOf(R.drawable.bulb))));
 
         //
     }
@@ -189,6 +192,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         }
     }
 
+    //New implementation doesn't use it. Not gonna deprecate it yet.
     public Device getDeviceByName(String name) {
         Device d;
         try {
