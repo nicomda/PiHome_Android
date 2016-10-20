@@ -92,7 +92,7 @@ public final class DB_Queries {
                 c.getString(c.getColumnIndex(Switch.PASSWORD)),
                 c.getString(c.getColumnIndex(Switch.GPIO)),
                 c.getString(c.getColumnIndex(Switch.PULSE_ENABLED)),
-                c.getString(c.getColumnIndex(Switch.PULSE_ENABLED)),
+                c.getString(c.getColumnIndex(Switch.PULSE_DURATION)),
                 c.getString(c.getColumnIndex(Switch.GPS_ENABLED)),
                 c.getString(c.getColumnIndex(Switch.GPS_DISTANCE)),
                 c.getString(c.getColumnIndex(Switch.GPS_LOCATION)),
