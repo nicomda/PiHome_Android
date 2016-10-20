@@ -43,7 +43,7 @@
                 app:sctl_expanded_avatarSize="100dp"
                 app:sctl_expanded_offsetX="16dp"
                 app:sctl_expanded_offsetY="24dp"
-                app:sctl_expanded_subtitleTextSize="26dp"
+                app:sctl_expanded_subtitleTextSize="20dp"
                 app:sctl_expanded_titleTextSize="34dp"
                 app:sctl_subtitle_id="@+id/subtitle"
                 app:sctl_title_id="@+id/title"
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="200dp"
                         android:id="@+id/title"
-                        android:text="Title"
+                        android:text="@string/device_title"
                         android:textColor="@color/colorPrimaryText"
                         />
 
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="200dp"
                         android:id="@+id/subtitle"
-                        android:text="Subtitle"
+                        android:text="@string/device_subtitle"
                         android:textColor="@color/colorSecondaryText"
                         />
                 </LinearLayout>

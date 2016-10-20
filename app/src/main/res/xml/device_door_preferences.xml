@@ -8,11 +8,13 @@
         <android.support.v7.preference.EditTextPreference
             android:key="ip"
             android:title="@string/door_ip"
-            android:summary="@string/door_ip_set" />
+            android:summary="@string/door_ip_set"
+            style="@style/AppPreference.DialogPreference" />
         <android.support.v7.preference.EditTextPreference
             android:key="port"
             android:title="@string/door_port"
-            android:summary="@string/door_port_set"/>
+            android:summary="@string/door_port_set"
+            style="@style/AppPreference.DialogPreference" />
 
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="passswitch"
@@ -22,14 +24,16 @@
             android:dependency="passswitch"
             android:key="password"
             android:title="@string/door_password"
-            android:summary="@string/door_password_set" />
+            android:summary="@string/door_password_set"
+            style="@style/AppPreference.DialogPreference" />
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory android:title="@string/door_category_gpio">
 
         <android.support.v7.preference.EditTextPreference
             android:key="gpio"
             android:title="@string/door_pin"
-            android:summary="@string/door_pin_set" />
+            android:summary="@string/door_pin_set"
+            style="@style/AppPreference.DialogPreference" />
 
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="pulseswitch"
@@ -41,7 +45,8 @@
             android:dependency="pulseswitch"
             android:key="pulsems"
             android:title="@string/door_pulse_ms"
-            android:summary="@string/door_pulse_ms_set" />
+            android:summary="@string/door_pulse_ms_set"
+            style="@style/AppPreference.DialogPreference" />
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory android:title="@string/door_category_gps">
 
@@ -55,8 +60,17 @@
             android:dependency="gpsswitch"
             android:key="gpsdistance"
             android:title="@string/door_gps_distance"
-            android:summary="@string/door_gps_distance_set" />
+            android:summary="@string/door_gps_distance_set"
+            style="@style/AppPreference.DialogPreference" />
+
+        <org.nicomda.pihome.aux.LocationPreference
+            android:dependency="gpsswitch"
+            android:key="location"
+            android:title="@string/door_gps_location"
+            android:summary="@string/door_gps_location_set"
+            style="@style/AppPreference.DialogPreference" />
     </android.support.v7.preference.PreferenceCategory>
+
     <android.support.v7.preference.PreferenceCategory android:title="@string/door_category_nfc">
 
         <android.support.v7.preference.SwitchPreferenceCompat

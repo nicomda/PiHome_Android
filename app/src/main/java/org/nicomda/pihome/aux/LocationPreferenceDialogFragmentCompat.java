@@ -2,29 +2,24 @@ package org.nicomda.pihome.aux;
 
 /**
  * Created by nicomda on 14/10/16.
+ * Dialog to show Map and Store location on shared pref
  */
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.DialogPreference;
 import android.support.v7.preference.PreferenceDialogFragmentCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -37,9 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.nicomda.pihome.R;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,11 +75,8 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
             locString = ((LocationPreference) preference).getLoc_string();
         }
         //GETTING MAP
-        mapFragment = ((SupportMapFragment) getFragmentManager()
-                .findFragmentById(R.id.map));
+        mapFragment = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
-
-
     }
 
     @Override
@@ -99,6 +89,7 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
                 locationPreference.setLocationString(locprefstring);
             }
         }
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
 
@@ -227,7 +218,7 @@ public class LocationPreferenceDialogFragmentCompat extends PreferenceDialogFrag
     }
 
     public LatLng getLatLngFromAddress(String location) {
-        List<LatLng> ll = new ArrayList<LatLng>();
+        List<LatLng> ll = new ArrayList<>();
         if (Geocoder.isPresent()) {
             try {
                 Geocoder gc = new Geocoder(getContext());

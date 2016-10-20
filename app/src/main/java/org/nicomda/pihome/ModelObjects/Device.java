@@ -1,7 +1,12 @@
 package org.nicomda.pihome.ModelObjects;
 
+import org.nicomda.pihome.sqlite.DB_Metadata;
+
+import java.util.UUID;
+
 /**
  * Created by nicomda on 3/10/16.
+ * Device class for modeling DB objects
  */
 
 public class Device {
@@ -80,4 +85,13 @@ public class Device {
     public void setColor_res(String color_res) {
         this.color_res = color_res;
     }
+
+    public String generarIdDevice() {
+
+        setId("D-" + UUID.randomUUID().toString());
+        return getId();
+    }
+
+
+
 }

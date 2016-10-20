@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by nicomda on 17/10/16.
+ * Database CRUD functions
  */
 
 public final class DB_Queries {
@@ -32,6 +33,7 @@ public final class DB_Queries {
         return instance;
     }
 
+    /* I left it here just in case i need to join the tables, but i don't think that's necessary.
     private static final String DEVICE_JOIN_DEVICE_SWITCH = "device " + "INNER JOIN switch " + "ON device.id = switch.id ";
 
     private final String[] proyDevice = new String[]{
@@ -40,7 +42,7 @@ public final class DB_Queries {
             Device.TITLE,
             Device.DESCRIPTION,
             Device.IMAGE,
-            Device.COLOR};
+            Device.COLOR};*/
 
     public ArrayList<org.nicomda.pihome.ModelObjects.Device> getDevices() {
         SQLiteDatabase db = database.getReadableDatabase();
@@ -56,6 +58,7 @@ public final class DB_Queries {
                     c.getString(c.getColumnIndex(Device.COLOR))
             ));
         }
+        c.close();
 
         return devices;
     }
@@ -64,8 +67,7 @@ public final class DB_Queries {
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + DB_PiHome.Tables.DEVICE + " WHERE " + Device.TITLE + " = '" + name + "'", null);
         c.moveToFirst();
-        c.getString(c.getColumnIndex(Device.ID));
-        return new org.nicomda.pihome.ModelObjects.Device(
+        org.nicomda.pihome.ModelObjects.Device d = new org.nicomda.pihome.ModelObjects.Device(
                 c.getString(c.getColumnIndex(Device.ID)),
                 c.getString(c.getColumnIndex(Device.TITLE)),
                 c.getString(c.getColumnIndex(Device.DESCRIPTION)),
@@ -73,6 +75,8 @@ public final class DB_Queries {
                 c.getString(c.getColumnIndex(Device.TYPE)),
                 c.getString(c.getColumnIndex(Device.COLOR))
         );
+        c.close();
+        return d;
     }
 
     public org.nicomda.pihome.ModelObjects.DeviceSwitch getSwitchByID(String id) {
@@ -80,7 +84,7 @@ public final class DB_Queries {
         Cursor c = db.rawQuery("SELECT * FROM " + DB_PiHome.Tables.SWITCH + " WHERE " + Device.ID + " = '" + id + "'", null);
         c.moveToFirst();
         c.getString(c.getColumnIndex(Device.ID));
-        return new org.nicomda.pihome.ModelObjects.DeviceSwitch(
+        DeviceSwitch s = new org.nicomda.pihome.ModelObjects.DeviceSwitch(
                 c.getString(c.getColumnIndex(Switch.ID)),
                 c.getString(c.getColumnIndex(Switch.IP)),
                 c.getString(c.getColumnIndex(Switch.PORT)),
@@ -94,15 +98,16 @@ public final class DB_Queries {
                 c.getString(c.getColumnIndex(Switch.GPS_LOCATION)),
                 c.getString(c.getColumnIndex(Switch.NFC_ENABLED))
         );
+        c.close();
+        return s;
     }
 
     public String insertDevice(org.nicomda.pihome.ModelObjects.Device device) {
         SQLiteDatabase db = database.getWritableDatabase();
         // Generar Pk
-        String idDevice = Device.generarIdDevice();
 
         ContentValues values = new ContentValues();
-        values.put(Device.ID, idDevice);
+        values.put(Device.ID, device.getId());
         values.put(Device.TITLE, device.getName());
         values.put(Device.DESCRIPTION, device.getAdditional_info());
         values.put(Device.TYPE, device.getType());
@@ -112,7 +117,7 @@ public final class DB_Queries {
         // Insertar cabecera
         db.insertOrThrow(DB_PiHome.Tables.DEVICE, null, values);
 
-        return idDevice;
+        return device.getId();
     }
 
     public boolean updateDevice(org.nicomda.pihome.ModelObjects.Device newDevice) {
@@ -126,7 +131,7 @@ public final class DB_Queries {
         values.put(Device.COLOR, newDevice.getColor_res());
 
         String whereClause = String.format("%s=?", Device.ID);
-        String[] whereArgs = {newDevice.getId().toString()};
+        String[] whereArgs = {newDevice.getId()};
 
         int result = db.update(DB_PiHome.Tables.DEVICE, values, whereClause, whereArgs);
 
@@ -164,7 +169,7 @@ public final class DB_Queries {
                     c.getString(c.getColumnIndex(Switch.NFC_ENABLED))
             ));
         }
-
+        c.close();
 
         return switches;
     }

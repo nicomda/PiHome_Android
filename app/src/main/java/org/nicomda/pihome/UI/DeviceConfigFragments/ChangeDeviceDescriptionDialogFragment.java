@@ -1,7 +1,6 @@
 package org.nicomda.pihome.UI.DeviceConfigFragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import org.nicomda.pihome.R;
 
 /**
  * Created by nicomda on 6/10/16.
+ * Dialog to change device's description onclick
  */
 
 public class ChangeDeviceDescriptionDialogFragment extends DialogFragment {
@@ -28,7 +28,7 @@ public class ChangeDeviceDescriptionDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View content=inflater.inflate(R.layout.dialog_change_device_description,null);
-        builder.setTitle(R.string.device_subtitle)
+        builder.setTitle(R.string.device_subtitle_set)
                 .setView(content);
         description=(EditText)content.findViewById(R.id.device_change_description);
         builder.setPositiveButton(R.string.device_title_button_ok, new DialogInterface.OnClickListener() {

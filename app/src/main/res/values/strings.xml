@@ -8,7 +8,7 @@
     //DEVICES STRINGS
     <string name="add_device_title">Select device</string>
     <string name="device_bulb">Bulb</string>
-    <string name="device_light_switch">Light Switch</string>
+    <string name="device_switch">Switch</string>
     <string name="device_blind">Blind</string>
     <string name="device_sprinkle">Sprinkler</string>
     <string name="device_cam">IP Camera</string>
@@ -38,9 +38,11 @@
     <string name="intro_5_description">""</string>-->
 
     //PREFERENCE SETTINGS
-    <string name="device_title">Set device title</string>
+    <string name="device_title">Title</string>
+    <string name="device_title_set">Set device title</string>
     <string name="device_title_dialog_hint">Your device name</string>
-    <string name="device_subtitle">Set device description</string>
+    <string name="device_subtitle">Description</string>
+    <string name="device_subtitle_set">Set device description</string>
     <string name="device_subtitle_dialog_hint">Your device description</string>
 
     <string name="device_title_button_ok">Save</string>
@@ -72,5 +74,6 @@
     <string name="door_nfc_enable">Enable NFC Activation</string>
     <string name="current_position">Current position</string>
     <string name="selected_position">Selected position</string>
+    <string name="device_not_available">Not available yet</string>
 
 </resources>

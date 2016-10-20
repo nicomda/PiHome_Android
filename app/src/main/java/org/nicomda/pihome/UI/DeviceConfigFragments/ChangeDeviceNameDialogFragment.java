@@ -1,7 +1,6 @@
 package org.nicomda.pihome.UI.DeviceConfigFragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,12 +10,12 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.nicomda.pihome.R;
 
 /**
  * Created by nicomda on 6/10/16.
+ * Dialog fragment to change device's title onclick
  */
 
 public class ChangeDeviceNameDialogFragment extends DialogFragment {
@@ -29,7 +28,7 @@ public class ChangeDeviceNameDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View content=inflater.inflate(R.layout.dialog_change_device_name,null);
-        builder.setTitle(R.string.device_title)
+        builder.setTitle(R.string.device_title_set)
                 .setView(content);
         name=(EditText)content.findViewById(R.id.device_change_name);
         builder.setPositiveButton(R.string.device_title_button_ok, new DialogInterface.OnClickListener() {

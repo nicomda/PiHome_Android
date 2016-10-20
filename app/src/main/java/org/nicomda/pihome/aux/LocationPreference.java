@@ -2,12 +2,15 @@ package org.nicomda.pihome.aux;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.location.Location;
 import android.support.v7.preference.DialogPreference;
 import android.util.AttributeSet;
 
+import org.nicomda.pihome.R;
+
 /**
  * Created by nicomda on 13/10/16.
+ * Location preference to get a map and location.
+ * Refer to LocationPReferenceDialogFragmentCompat too.
  */
 
 public class LocationPreference extends DialogPreference {
@@ -27,16 +30,16 @@ public class LocationPreference extends DialogPreference {
                               int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        //Do custom stuff here
-
     }
 
     public String getLoc_string() {
+
         return loc_string;
+
     }
 
-    public void setLocationString(String _latitude, String _longitude) {
-        loc_string = _latitude + "," + _longitude;
+    public void setLocationString(String locationString) {
+        loc_string = locationString;
         persistString(loc_string);
     }
 
@@ -46,5 +49,19 @@ public class LocationPreference extends DialogPreference {
         return a.getInt(index, 0);
     }
 
-    //TODO Implement OnSetInitialValue
+    @Override
+    protected void onSetInitialValue(boolean restorePersistedValue,
+                                     Object defaultValue) {
+
+        // Read the value. Use the default value if it is not possible.
+        setLocationString(restorePersistedValue ?
+                getPersistedString(loc_string) : (String) defaultValue);
+    }
+
+    @Override
+    public int getDialogLayoutResource() {
+        return R.layout.pref_dialog_location;
+    }
+
+
 }

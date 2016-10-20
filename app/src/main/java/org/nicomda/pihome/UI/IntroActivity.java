@@ -25,6 +25,7 @@ public class IntroActivity extends AppIntro {
         addSlide(AppIntroFragment.newInstance(getString(R.string.intro_4_title), getString(R.string.intro_4_description), R.drawable.ic_tick , Color.parseColor("#424242")));
         askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},2);
         askForPermissions(new String[]{Manifest.permission.CAMERA},3);
+        //TODO ADD REMAINING PERMISSIONS SLIDES
         showSkipButton(false);
         showStatusBar(false);
         setProgressButtonEnabled(true);

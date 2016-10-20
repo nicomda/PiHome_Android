@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.nicomda.pihome">
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <!--Permission in manifest to get it working. Add later to with AppIntro.-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC62Zeq55xkhkFng_mBj7IYnL0_hvni8u0" />
+
         <activity
             android:name=".UI.MainActivity"
             android:label="@string/app_name"

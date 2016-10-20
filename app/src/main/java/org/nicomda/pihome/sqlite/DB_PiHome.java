@@ -12,6 +12,7 @@ import org.nicomda.pihome.sqlite.DB_Metadata.User;
 
 /**
  * Created by nicomda on 17/10/16.
+ * Class for DB creation, opening and upgrade
  */
 
 public class DB_PiHome extends SQLiteOpenHelper {
@@ -50,7 +51,7 @@ public class DB_PiHome extends SQLiteOpenHelper {
                 Device.IMAGE, Device.COLOR));
         db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT UNIQUE NOT NULL %s ,%s TEXT NOT NULL,%s TEXT NOT NULL," +
-                        "%s TEXT UNIQUE NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL," +
                         "%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL,%s TEXT NOT NULL)",
                 Tables.SWITCH, BaseColumns._ID,
                 Switch.ID, Referencias.ID_REFERENCED,

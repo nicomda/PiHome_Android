@@ -3,22 +3,23 @@ package org.nicomda.pihome.UI;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.media.Image;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.nicomda.pihome.ModelObjects.Device;
+import org.nicomda.pihome.ModelObjects.DeviceSwitch;
 import org.nicomda.pihome.R;
+import org.nicomda.pihome.sqlite.DB_Queries;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,9 @@ import java.util.ArrayList;
  */
 public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.ViewHolder> {
     private ArrayList<Device> mDataset;
+    private DB_Queries database;
+    private DeviceSwitch undodeleteswitch;
+    private Device undodeletedevice;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -74,6 +78,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_device, parent, false);
         // set the view's size, margins, paddings and layout parameters
+        database = DB_Queries.getInstance(v.getContext());
 
         return new ViewHolder(v);
     }
@@ -83,9 +88,9 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Device item= mDataset.get(position);
+        final Device item = mDataset.get(holder.getAdapterPosition());
         holder.bindDevice(item);
-        holder.opt_activated = Boolean.valueOf(false);
+        holder.opt_activated = Boolean.FALSE;
         holder.editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,10 +98,10 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
                 rotate360=AnimationUtils.loadAnimation(v.getContext(),R.anim.rotate360);
                 v.startAnimation(rotate360);
                 if(!holder.opt_activated){
-                    config_opt_enable(holder,position);
+                    config_opt_enable(holder, holder.getAdapterPosition());
                 }
                 else{
-                    config_opt_disable(holder,position);
+                    config_opt_disable(holder, holder.getAdapterPosition());
 
                 }
             }
@@ -115,6 +120,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         holder.configIcon.setVisibility(View.VISIBLE);
         holder.binIcon.setVisibility(View.VISIBLE);
 
+
         ObjectAnimator anim = ObjectAnimator.ofFloat(holder.configIcon, "translationX", 0,-100);
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(holder.binIcon, "translationX", 0,-200);
 
@@ -132,17 +138,21 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
             @Override
             public void onClick(View v) {
                 //Saving register before delete for undo implementation
-                final Device undodelete=mDataset.get(position);
+                undodeletedevice = mDataset.get(position);
+                undodeleteswitch = getSwitchFromDatabase(mDataset.get(position).getId());
+                deleteDeviceFromDatabase(mDataset.get(position).getId(), v.getContext());
                 mDataset.remove(position);
+                config_opt_disable(holder, position);
                 notifyDataSetChanged();
                 Snackbar.make(v,v.getContext().getResources().getString(R.string.device_deleted_msg), Snackbar.LENGTH_LONG)
                         .setAction(v.getContext().getResources().getString(R.string.undo), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                mDataset.add(position,undodelete);
+                                mDataset.add(position, undodeletedevice);
+                                insertDevice(undodeletedevice, undodeleteswitch);
                                 config_opt_disable(holder,position);
                                 notifyDataSetChanged();
-                                holder.opt_activated=false;
+
                             }
                         }).show();
 
@@ -163,6 +173,50 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
         holder.configIcon.setOnClickListener(null);
         holder.binIcon.setOnClickListener(null);
         holder.opt_activated=false;
+    }
+
+    public void deleteDeviceFromDatabase(String id, Context context) {
+        try {
+            database.getDb().beginTransaction();
+            database.deleteDeviceById(id);
+            Log.d("DBaseDelete DEVICE", id);
+            database.deleteSwitchById(id);
+            Log.d("DBaseDelete SWITCH", id);
+            database.getDb().setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DBaseException", e.getMessage());
+        } finally {
+            database.getDb().endTransaction();
+        }
+    }
+
+    public DeviceSwitch getSwitchFromDatabase(String id) {
+        DeviceSwitch s = null;
+        try {
+            database.getDb().beginTransaction();
+            s = database.getSwitchByID(id);
+            database.getDb().setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DBaseException", e.getMessage());
+        } finally {
+            database.getDb().endTransaction();
+        }
+        return s;
+    }
+
+    public void insertDevice(Device d, DeviceSwitch s) {
+        try {
+            database.getDb().beginTransaction();
+            database.insertDevice(d);
+            Log.d("DBaseInsert DEVICE", d.getId());
+            database.insertSwitch(s);
+            Log.d("DBaseInsert SWITCH", d.getId());
+            database.getDb().setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("DBaseException", e.getMessage());
+        } finally {
+            database.getDb().endTransaction();
+        }
     }
 }
 

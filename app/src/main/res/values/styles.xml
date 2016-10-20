@@ -45,5 +45,10 @@
         <item name="android:layout">@layout/preference_material</item>
     </style>
 
+    <style name="AppPreference.DialogPreference">
+        <item name="positiveButtonText">@string/device_title_button_ok</item>
+        <item name="negativeButtonText">@string/device_title_button_cancel</item>
+    </style>
+
 
 </resources>

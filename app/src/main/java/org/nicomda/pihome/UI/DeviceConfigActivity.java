@@ -153,15 +153,14 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
         Device d;
         s = getSwitchFromPrefs();
         d = getDeviceFromPrefs();
+        s.setId(d.generarIdDevice());
         try {
             datos.getDb().beginTransaction();
-            Log.d("INSERTED DEVICE ", datos.insertDevice(d));
-            d = getDeviceByName(d.getName());
-            //s.setId(d.getId());
-            //Log.d("INSERTED SWITCH ",datos.insertSwitch(s));
+            Log.d("DBaseInsert DEVICE ", datos.insertDevice(d));
+            Log.d("DBaseInsert SWITCH ", datos.insertSwitch(s));
             datos.getDb().setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d("Exception", e.getMessage());
+            Log.d("DBaseException", e.getMessage());
 
         } finally {
             datos.getDb().endTransaction();
@@ -176,7 +175,7 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
             datos.getDb().setTransactionSuccessful();
             return d;
         } catch (Exception e) {
-            Log.d("Database Exception", e.getMessage());
+            Log.d("DBaseException", e.getMessage());
             d = null;
             return d;
         } finally {
