@@ -106,6 +106,6 @@ public class DoorFragment extends com.takisoft.fix.support.v7.preference.Prefere
         p = findPreference("location");
         p.setSummary(prefs.getString("location", getString(R.string.door_gps_location_set)));
         p = findPreference("deviceid");
-        p.setTitle(p.getTitle() + ": " + prefs.getString("deviceid", " "));
+        p.setTitle(prefs.getString("deviceid", " "));
     }
 }
