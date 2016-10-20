@@ -26,8 +26,6 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
     private List<DeviceType> itemList;
     private Context context;
-    public SharedPreferences prefs;
-    public SharedPreferences.Editor editor;
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
