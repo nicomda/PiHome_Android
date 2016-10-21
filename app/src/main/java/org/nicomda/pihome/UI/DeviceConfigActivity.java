@@ -152,7 +152,6 @@ public class DeviceConfigActivity extends AppCompatActivity implements SharedPre
                 prefs.getString("gpsdistance", getString(R.string.door_gps_distance)),
                 prefs.getString("location", getString(R.string.door_gps_location)),
                 String.valueOf(prefs.getBoolean("nfcswitch", false)));
-
         return dev;
     }
 

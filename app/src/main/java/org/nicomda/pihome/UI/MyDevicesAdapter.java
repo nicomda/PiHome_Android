@@ -72,7 +72,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<MyDevicesAdapter.View
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "ID: " + itemid, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v.getRootView().findViewById(R.id.my_device_list), "ID " + itemid, Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
